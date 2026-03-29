@@ -30,6 +30,23 @@ const User = sequelize.define('users', {
     },
   },
 
+  username: {
+    type: DataTypes.STRING(50),
+    allowNull: false,
+    unique: {
+      name: 'users_username_unique',
+      msg: 'This username is already taken.',
+    },
+    validate: {
+      notNull: { msg: 'Username is required.' },
+      notEmpty: { msg: 'Username cannot be empty.' },
+      len: {
+        args: [3, 50],
+        msg: 'Username must be between 3 and 50 characters.',
+      },
+    },
+  },
+
   email: {
     type: DataTypes.STRING(255),
     allowNull: false,

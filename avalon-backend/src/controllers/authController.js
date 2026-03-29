@@ -29,13 +29,22 @@ const generateToken = (user) =>
 
 const signup = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, username, email, password, role } = req.body;
 
     // --- basic field validation ---
-    if (!name || !email || !password) {
+    if (!name || !username || !email || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Name, email, and password are required.',
+        message: 'Name, username, email, and password are required.',
+      });
+    }
+
+    // --- check duplicate username ---
+    const existingUsername = await User.findOne({ where: { username } });
+    if (existingUsername) {
+      return res.status(400).json({
+        success: false,
+        message: 'This username is already taken.',
       });
     }
 
@@ -53,6 +62,7 @@ const signup = async (req, res) => {
 
     const user = await User.create({
       name,
+      username,
       email,
       password_hash,
       role: role || 'buyer',
@@ -64,6 +74,7 @@ const signup = async (req, res) => {
       data: {
         id: user.id,
         name: user.name,
+        username: user.username,
         email: user.email,
         role: user.role,
       },
@@ -123,6 +134,7 @@ const login = async (req, res) => {
         user: {
           id: user.id,
           name: user.name,
+          username: user.username,
           email: user.email,
           role: user.role,
         },

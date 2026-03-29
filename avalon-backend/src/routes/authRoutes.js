@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { signup, login, getCurrentUser } = require('../controllers/authController');
 const { authenticate } = require('../middleware/authMiddleware');
+const { validate, signupRules, loginRules } = require('../middleware/validators');
 
 // ---------------------------------------------------------------------------
 // Auth Routes – Avalon (AuctionManager)
@@ -12,8 +13,8 @@ const { authenticate } = require('../middleware/authMiddleware');
 // GET  /auth/me      – get current logged-in user (protected)
 // ---------------------------------------------------------------------------
 
-router.post('/signup', signup);
-router.post('/login', login);
+router.post('/signup', signupRules, validate, signup);
+router.post('/login', loginRules, validate, login);
 router.get('/me', authenticate, getCurrentUser);
 
 module.exports = router;

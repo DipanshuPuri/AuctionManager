@@ -147,7 +147,12 @@ const Dashboard = () => {
               className="profile-img" 
             />
             <div className="profile-info">
-              <h1 className="profile-name">{user.name || (isSeller ? 'Alex Smith' : 'Jon Smith')}</h1>
+              <h1 className="profile-name" style={{ marginBottom: 0 }}>
+                {user.name === 'test' ? (isSeller ? 'Alex Smith' : 'Jon Smith') : user.name}
+              </h1>
+              <p className="text-muted text-sm" style={{ marginBottom: '1rem', fontWeight: 500 }}>
+                @{user.username || (isSeller ? 'alex_vendor' : 'jonsmith1')}
+              </p>
               <span className="profile-role">
                 {isSeller ? '🏷️ Premium Seller' : '🛒 Premium Buyer'}
               </span>

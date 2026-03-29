@@ -2,9 +2,6 @@
 
 A real-time online auction platform backend built with Node.js, Express, and MySQL. Avalon enables users to register as buyers or sellers, list auctions, place competitive bids, and experience live auction updates via WebSockets.
 
-> **Course:** Sem 6 — Fundamentals of Software Engineering  
-> **Repository:** [github.com/DipanshuPuri/AuctionManager](https://github.com/DipanshuPuri/AuctionManager)
-
 ---
 
 ## 📋 Table of Contents

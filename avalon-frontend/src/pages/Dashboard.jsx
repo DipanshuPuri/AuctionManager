@@ -151,7 +151,7 @@ const Dashboard = () => {
                 {user.name === 'test' ? (isSeller ? 'Alex Smith' : 'Jon Smith') : user.name}
               </h1>
               <p className="text-muted text-sm" style={{ marginBottom: '1rem', fontWeight: 500 }}>
-                @{user.username || (isSeller ? 'alex_vendor' : 'jonsmith1')}
+                @{user.username || (isSeller ? 'alexsmith1' : 'jonsmith1')}
               </p>
               <span className="profile-role">
                 {isSeller ? '🏷️ Premium Seller' : '🛒 Premium Buyer'}
@@ -160,7 +160,7 @@ const Dashboard = () => {
               <div className="profile-grid-info">
                 <div className="info-item">
                   <span className="info-label">Account Tier</span>
-                  <span className="info-value">{isSeller ? 'Diamond Vendor' : 'Gold Membership'}</span>
+                  <span className="info-value">{isSeller ? 'Diamond Vendor' : 'Gold Member'}</span>
                 </div>
                 <div className="info-item">
                   <span className="info-label">Email Address</span>

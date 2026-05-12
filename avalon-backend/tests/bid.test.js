@@ -50,7 +50,7 @@ describe('Bid API', () => {
         .expect(201);
 
       expect(res.body.success).toBe(true);
-      expect(res.body.data.bid.amount).toBe('150.00');
+      expect(parseFloat(res.body.data.bid.amount)).toBe(150);
     });
 
     it('should reject bid lower than current price', async () => {

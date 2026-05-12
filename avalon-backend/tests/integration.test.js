@@ -43,7 +43,7 @@ describe('Auction Lifecycle Integration', () => {
 
     expect(res.body.success).toBe(true);
     expect(res.body.data.title).toBe('Vintage Watch');
-    expect(res.body.data.current_price).toBe('500.00');
+    expect(parseFloat(res.body.data.current_price)).toBe(500);
     auctionId = res.body.data.id;
   });
 

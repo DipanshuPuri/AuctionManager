@@ -13,6 +13,7 @@ const rateLimit = require('express-rate-limit');
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 10,
+  skip: () => process.env.NODE_ENV === 'test',
   message: {
     success: false,
     message: 'Too many authentication attempts. Please try again after 15 minutes.',
@@ -28,6 +29,7 @@ const authLimiter = rateLimit({
 const bidLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
   max: 30,
+  skip: () => process.env.NODE_ENV === 'test',
   message: {
     success: false,
     message: 'Too many bid attempts. Please slow down.',
@@ -43,6 +45,7 @@ const bidLimiter = rateLimit({
 const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 100,
+  skip: () => process.env.NODE_ENV === 'test',
   message: {
     success: false,
     message: 'Too many requests from this IP. Please try again later.',

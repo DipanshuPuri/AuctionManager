@@ -65,4 +65,48 @@ const loginRules = [
     .notEmpty().withMessage('Password is required.'),
 ];
 
-module.exports = { validate, signupRules, loginRules };
+// ========================  AUCTION RULES  ========================
+
+const auctionRules = [
+  body('title')
+    .trim()
+    .notEmpty().withMessage('Title is required.')
+    .isLength({ min: 3, max: 200 }).withMessage('Title must be between 3 and 200 characters.'),
+
+  body('description')
+    .optional()
+    .trim()
+    .isLength({ max: 2000 }).withMessage('Description must be at most 2000 characters.'),
+
+  body('starting_price')
+    .notEmpty().withMessage('Starting price is required.')
+    .isFloat({ min: 0.01 }).withMessage('Starting price must be a positive number greater than 0.'),
+
+  body('start_time')
+    .optional()
+    .isISO8601().withMessage('Start time must be a valid date.'),
+
+  body('end_time')
+    .optional()
+    .isISO8601().withMessage('End time must be a valid date.'),
+];
+
+// ========================  BID RULES  ========================
+
+const bidRules = [
+  body('auction_id')
+    .notEmpty().withMessage('Auction ID is required.')
+    .isInt({ min: 1 }).withMessage('Auction ID must be a positive integer.'),
+
+  body('amount')
+    .notEmpty().withMessage('Bid amount is required.')
+    .isFloat({ min: 0.01 }).withMessage('Bid amount must be a positive number greater than 0.'),
+];
+
+module.exports = {
+  validate,
+  signupRules,
+  loginRules,
+  auctionRules,
+  bidRules,
+};

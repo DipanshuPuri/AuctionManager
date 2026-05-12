@@ -1,0 +1,27 @@
+{
+  "name": "auctionmanager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd avalon-backend && npm run dev",
+    "client": "cd avalon-frontend && npm run dev",
+    "install:all": "npm install && cd avalon-backend && npm install && cd ../avalon-frontend && npm install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DipanshuPuri/AuctionManager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/DipanshuPuri/AuctionManager/issues"
+  },
+  "homepage": "https://github.com/DipanshuPuri/AuctionManager#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

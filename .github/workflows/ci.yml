@@ -1,0 +1,91 @@
+name: Avalon CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  # ========================  BACKEND  ========================
+  backend:
+    name: Backend – Test & Build
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: auction_db_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      DB_NAME: auction_db_test
+      DB_USER: root
+      DB_PASSWORD: root
+      DB_HOST: 127.0.0.1
+      PORT: 5001
+      NODE_ENV: test
+      JWT_SECRET: ci_test_secret_key
+      JWT_EXPIRY: 1h
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: avalon-backend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: avalon-backend
+        run: npm ci
+
+      - name: Wait for MySQL
+        run: |
+          until mysqladmin ping -h 127.0.0.1 --silent; do
+            echo "Waiting for MySQL..."
+            sleep 2
+          done
+
+      - name: Run tests
+        working-directory: avalon-backend
+        run: npm test
+
+  # ========================  FRONTEND  ========================
+  frontend:
+    name: Frontend – Lint & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: avalon-frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: avalon-frontend
+        run: npm ci
+
+      - name: Lint check
+        working-directory: avalon-frontend
+        run: npm run lint || true
+
+      - name: Build
+        working-directory: avalon-frontend
+        run: npm run build

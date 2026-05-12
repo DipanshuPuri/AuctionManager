@@ -206,7 +206,7 @@ const Dashboard = () => {
                 <h2 className="dashboard-section-title" style={{ marginBottom: 0 }}>
                   <span style={{ fontSize: '1.5rem' }}>📢</span> My Active Listings
                 </h2>
-                <button className="btn btn-primary btn-sm">+ Create New Listing</button>
+                <button className="btn btn-primary btn-sm" onClick={() => navigate('/auctions/create')}>+ Create New Listing</button>
               </div>
               <div className="ledger-card">
                 <div className="history-list">

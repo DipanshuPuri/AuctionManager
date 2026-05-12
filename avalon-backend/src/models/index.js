@@ -15,26 +15,24 @@ const { sequelize } = require('../config/db');
 // ========================  MODEL IMPORTS  ========================
 
 const User = require('./User');
-// const Auction = require('./Auction');  // future
-// const Bid     = require('./Bid');      // future
+const Auction = require('./Auction');
+const Bid = require('./Bid');
 
 // ========================  ASSOCIATIONS  =========================
 // Define all relationships here so every model is fully loaded first.
 // This avoids circular-dependency issues.
 
-// --- Future associations (uncomment when models are created) ---
-
 // User ↔ Auction  (a seller lists many auctions)
-// User.hasMany(Auction,    { foreignKey: 'seller_id', as: 'auctions' });
-// Auction.belongsTo(User,  { foreignKey: 'seller_id', as: 'seller'   });
+User.hasMany(Auction, { foreignKey: 'seller_id', as: 'auctions' });
+Auction.belongsTo(User, { foreignKey: 'seller_id', as: 'seller' });
 
 // User ↔ Bid  (a buyer places many bids)
-// User.hasMany(Bid,        { foreignKey: 'bidder_id', as: 'bids'     });
-// Bid.belongsTo(User,      { foreignKey: 'bidder_id', as: 'bidder'   });
+User.hasMany(Bid, { foreignKey: 'bidder_id', as: 'bids' });
+Bid.belongsTo(User, { foreignKey: 'bidder_id', as: 'bidder' });
 
 // Auction ↔ Bid  (an auction receives many bids)
-// Auction.hasMany(Bid,     { foreignKey: 'auction_id', as: 'bids'    });
-// Bid.belongsTo(Auction,   { foreignKey: 'auction_id', as: 'auction' });
+Auction.hasMany(Bid, { foreignKey: 'auction_id', as: 'bids' });
+Bid.belongsTo(Auction, { foreignKey: 'auction_id', as: 'auction' });
 
 // ========================  SYNC HELPER  ==========================
 
@@ -42,7 +40,7 @@ const User = require('./User');
  * Environment-aware database sync.
  *
  * | NODE_ENV    | Strategy         | Effect                             |
- * |-------------|------------------|------------------------------------|
+ * |-------------|------------------|------------------------------------| 
  * | development | alter: true      | adds new columns, keeps data       |
  * | test        | force: true      | drops & recreates every run        |
  * | production  | sync (no flags)  | creates missing tables, no alter   |
@@ -94,6 +92,6 @@ module.exports = {
   sequelize,
   syncDatabase,
   User,
-  // Auction,  // export future models here
-  // Bid,
+  Auction,
+  Bid,
 };
